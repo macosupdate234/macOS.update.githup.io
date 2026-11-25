@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ältere Macs auf neueres macOS bringen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap">
+<style>
+:root{--bg:#07080A;--bg2:#0E1015;--fg:#F5F7FA;--mut:#9AA2B1;--line:rgba(255,255,255,.09);--glass:rgba(255,255,255,.04);--blue:#6f86ff;--vio:#9a7bff;--ease:cubic-bezier(.22,1,.36,1);
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 17px/1.65 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(7,8,10,.7);backdrop-filter:blur(16px);z-index:10}
+.ambient{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.ambient i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;will-change:transform;animation:drift 28s ease-in-out infinite alternate}
+.ambient i:nth-child(1){width:55vmax;height:55vmax;left:-15vmax;top:-10vmax;background:radial-gradient(circle,#8a93a8,transparent 65%)}
+.ambient i:nth-child(2){width:45vmax;height:45vmax;right:-12vmax;top:25vh;background:radial-gradient(circle,var(--blue),transparent 65%);animation-duration:34s;animation-delay:-8s;opacity:.2}
+.ambient i:nth-child(3){width:40vmax;height:40vmax;left:20vw;bottom:-18vmax;background:radial-gradient(circle,var(--vio),transparent 65%);animation-duration:40s;animation-delay:-15s;opacity:.16}
+@keyframes drift{to{transform:translate3d(8vw,6vh,0) scale(1.15)}}
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:20;background:rgba(10,11,14,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+nav{max-width:1120px;margin:auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:800;letter-spacing:-.02em;text-decoration:none;color:var(--fg)}
+nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+nav a:not(.brand){display:block;padding:6px 12px;border-radius:99px;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;transition:color .5s var(--ease),background .5s var(--ease)}
+nav a:not(.brand):hover,nav a:focus-visible{color:var(--fg);background:var(--glass)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+section{max-width:1120px;margin:auto;padding:130px 24px}
+h1,h2,h3{letter-spacing:-.035em;line-height:1.05;margin:0}
+h1{font-size:clamp(40px,7.2vw,92px);font-weight:800}
+h2{font-size:clamp(30px,4.6vw,56px);font-weight:700;margin-bottom:22px}
+h3{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+p{margin:0 0 1em;color:var(--mut);max-width:62ch}
+.grad{background:linear-gradient(100deg,#fff,#aab3c7 55%,#8a9cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero{min-height:100vh;min-height:100svh;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-top:150px}
+.hero p{font-size:19px;margin-top:26px}
+.stack{position:relative;height:440px;perspective:1100px;display:grid;place-items:center}
+.plates{position:relative;width:300px;height:300px;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-32deg);transition:transform 1.2s var(--ease)}
+.plate{position:absolute;inset:0;border-radius:26px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.02));backdrop-filter:blur(6px);display:flex;align-items:flex-end;padding:18px;font-size:13px;font-weight:500;color:var(--fg);animation:float 7s ease-in-out infinite;will-change:transform}
+.plate:nth-child(1){transform:translateZ(0);background:linear-gradient(135deg,rgba(111,134,255,.18),rgba(255,255,255,.02));animation-delay:0s}
+.plate:nth-child(2){transform:translateZ(70px);animation-delay:-1.4s}
+.plate:nth-child(3){transform:translateZ(140px);animation-delay:-2.8s}
+.plate:nth-child(4){transform:translateZ(210px);background:linear-gradient(135deg,rgba(154,123,255,.35),rgba(255,255,255,.06));box-shadow:0 0 80px rgba(130,120,255,.35);animation-delay:-4.2s}
+@keyframes float{50%{translate:0 -14px}}
+.stack .ring{position:absolute;width:420px;height:420px;border-radius:50%;border:1px solid var(--line);animation:spin 60s linear infinite;opacity:.6}
+.stack .ring::after{content:"";position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 18px var(--blue)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card{position:relative;padding:28px;border-radius:22px;background:var(--glass);border:1px solid var(--line);overflow:hidden;transition:transform .8s var(--ease),border-color .8s var(--ease)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(140,150,255,.18),transparent 60%);opacity:0;transition:opacity .6s var(--ease);pointer-events:none}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.2)}
+.card:hover::before{opacity:1}
+.card>*{position:relative}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.split{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:36px}
+.dev{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.dev .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ease)}
+.dev .more>div{overflow:hidden}
+.dev .more p{margin:14px 0 0;font-size:15px}
+.dev[aria-expanded="true"] .more{grid-template-rows:1fr}
+.dev .plus{position:absolute;top:26px;right:26px;color:var(--mut);transition:transform .6s var(--ease)}
+.dev[aria-expanded="true"] .plus{transform:rotate(45deg)}
+.dev small{display:block;color:var(--mut);margin-top:8px;font-size:14px}
+.no{margin-top:18px;display:flex;gap:16px;align-items:center;padding:22px 26px;border-radius:22px;border:1px solid rgba(255,120,120,.4);background:rgba(255,90,90,.07)}
+.no strong{font-size:22px;letter-spacing:-.02em;white-space:nowrap}
+.no p{margin:0}
+.steps{display:grid;gap:18px;margin-top:40px;counter-reset:s}
+.step{display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:var(--glass);font-weight:700}
+.step p{margin:10px 0 0}
+.step ul{margin:10px 0 0;padding-left:18px;color:var(--mut)}
+.safe{text-align:center}
+.safe h2,.safe p{margin-inline:auto}
+.dm{margin-top:60px;padding:56px 28px;border-radius:30px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(111,134,255,.12),rgba(154,123,255,.06))}
+.dm h3{font-size:clamp(26px,4vw,40px);margin-bottom:14px}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:30px 24px 60px}
+.rv{opacity:0;transform:translate3d(0,34px,0);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.w>span{display:inline-block;background:linear-gradient(100deg,#fff,#aab3c7 50%,#8a9cff 75%,#fff);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:up 1.3s var(--ease) calc(.2s + var(--i)*.09s) both,shimmer 9s linear 2.4s infinite}
+@keyframes up{from{transform:translateY(110%)}}
+@keyframes shimmer{to{background-position:-250% 0}}
+.grad{background-size:250% 100%;animation:shimmer 10s linear infinite}
+.hero p{animation:fadeup 1.4s var(--ease) 1.1s both}
+@keyframes fadeup{from{opacity:0;transform:translateY(20px)}}
+.plate{overflow:hidden;animation:enter 1.8s var(--ease) both,float 7s ease-in-out infinite}
+.plate:nth-child(1){animation-delay:.2s,0s}.plate:nth-child(2){animation-delay:.45s,-1.4s}.plate:nth-child(3){animation-delay:.7s,-2.8s}.plate:nth-child(4){animation-delay:.95s,-4.2s}
+@keyframes enter{from{opacity:0;scale:.65}}
+.plate::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.28) 50%,transparent 60%);background-size:300% 100%;background-position:150% 0;animation:sheen 5s ease-in-out infinite;pointer-events:none}
+.plate:nth-child(2)::after{animation-delay:.6s}.plate:nth-child(3)::after{animation-delay:1.2s}.plate:nth-child(4)::after{animation-delay:1.8s}
+@keyframes sheen{60%,100%{background-position:-150% 0}}
+.stack .ring.r2{width:300px;height:300px;animation-direction:reverse;animation-duration:38s;opacity:.4}
+.stack{translate:0 calc(var(--sy,0)*-.1px)}
+.ambient i:nth-child(1){translate:0 calc(var(--sy,0)*-.12px)}.ambient i:nth-child(2){translate:0 calc(var(--sy,0)*-.2px)}.ambient i:nth-child(3){translate:0 calc(var(--sy,0)*-.3px)}
+nav a:not(.brand).act{color:var(--fg);background:var(--glass)}
+.card.tilting{transition:transform .25s var(--ease),border-color .8s var(--ease),opacity 1.1s var(--ease)}
+.mq{overflow:hidden;border-block:1px solid var(--line);padding:20px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
+.mq div{display:flex;width:max-content;animation:mq 40s linear infinite}
+.mq span{padding-right:56px;font-size:clamp(24px,4vw,46px);font-weight:800;letter-spacing:-.035em;color:rgba(245,247,250,.16);white-space:nowrap}
+.mq span:nth-child(4n+2){color:rgba(111,134,255,.4)}
+@keyframes mq{to{transform:translateX(-50%)}}
+.steps{position:relative}
+.steps::before,.steps::after{content:"";position:absolute;left:25px;top:26px;bottom:26px;width:2px;border-radius:2px}
+.steps::after{background:var(--line)}
+.steps::before{z-index:1;background:linear-gradient(var(--blue),var(--vio));transform-origin:top;transform:scaleY(var(--prog,0));box-shadow:0 0 14px var(--blue)}
+.step::before{position:relative;z-index:2;background:#12141a;transition:border-color .9s var(--ease),box-shadow .9s var(--ease)}
+.step.in::before{border-color:var(--blue);box-shadow:0 0 26px rgba(111,134,255,.5)}
+.no{animation:pulse 3.5s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 44px rgba(255,90,90,.2)}}
+.dm{background-size:220% 220%;animation:shift 10s ease-in-out infinite alternate}
+@keyframes shift{to{background-position:100% 100%}}
+@media(max-width:860px){.stack .ring.r2{width:250px;height:250px}}
+.btn{display:inline-block;margin-top:10px;padding:14px 28px;border-radius:99px;background:var(--fg);color:#07080A;font-weight:700;text-decoration:none;transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(130,120,255,.4)}
+@media(prefers-reduced-motion:reduce){.w>span{transform:none}.steps::before{transform:scaleY(1)}}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:130px;gap:0}.stack{height:360px;order:2}.plates{width:230px;height:230px}.stack .ring{width:320px;height:320px}section{padding:90px 20px}nav ul{max-width:62vw}.no{flex-direction:column;align-items:flex-start;gap:6px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+<header><nav>
+<a class="brand" href="#top">Mac-Upgrade</a>
+<ul>
+<li><a href="#ueberblick">Überblick</a></li>
+<li><a href="#geraete">Geräte</a></li>
+<li><a href="#ablauf">Ablauf</a></li>
+<li><a href="#sicherheit">Sicherheit &amp; Infos</a></li>
+</ul>
+</nav></header>
+
+<main id="top">
+<section class="hero" id="start">
+<div>
+<h1><span class="w" style="--i:0"><span>Dein</span></span> <span class="w" style="--i:1"><span>älterer</span></span> <span class="w" style="--i:2"><span>Mac.</span></span> <span class="w" style="--i:3"><span>Ein</span></span> <span class="w" style="--i:4"><span>neueres</span></span> <span class="w" style="--i:5"><span>macOS.</span></span></h1>
+<p>Diese Seite erklärt, wie MacBook, MacBook Air, MacBook Pro und Mac mini auf neuere macOS-Versionen gebracht werden können: was dafür nötig ist, wie der Ablauf aussieht und warum du jederzeit zurück kannst.</p>
+</div>
+<div class="stack" aria-label="Schichten eines Macs: Hardware, Firmware, System, macOS" role="img">
+<div class="ring"></div><div class="ring r2"></div>
+<div class="plates" id="plates">
+<div class="plate">Hardware</div>
+<div class="plate">Firmware</div>
+<div class="plate">System</div>
+<div class="plate">Neueres macOS</div>
+</div>
+</div>
+</section>
+
+<div class="mq" aria-hidden="true"><div><span>MacBook</span><span>MacBook Air</span><span>MacBook Pro</span><span>Mac mini</span><span>MacBook</span><span>MacBook Air</span><span>MacBook Pro</span><span>Mac mini</span><span>MacBook</span><span>MacBook Air</span><span>MacBook Pro</span><span>Mac mini</span><span>MacBook</span><span>MacBook Air</span><span>MacBook Pro</span><span>Mac mini</span></div></div>
+<section id="ueberblick">
+<h2 class="rv">Warum ein Upgrade?</h2>
+<p class="rv">Ältere Macs laufen oft noch zuverlässig, bekommen vom Hersteller aber irgendwann keine neuen macOS-Versionen mehr angeboten. Das hat Folgen im Alltag.</p>
+<div class="split">
+<div class="card rv"><h3>Fehlende Updates</h3><p style="margin-top:12px">Neuere macOS-Versionen erscheinen im Software-Update nicht mehr, obwohl die Hardware weiter funktioniert.</p></div>
+<div class="card rv" style="--d:.1s"><h3>App-Kompatibilität</h3><p style="margin-top:12px">Viele Apps verlangen eine Mindestversion von macOS. Auf einem alten System bleiben aktuelle Versionen außen vor.</p></div>
+<div class="card rv" style="--d:.2s"><h3>Träges Gefühl</h3><p style="margin-top:12px">Ein aktuelleres System bringt oft ein flüssigeres, moderneres Arbeiten: bessere Funktionen, neuere Oberfläche, mehr Auswahl an Software.</p></div>
+</div>
+</section>
+
+<section id="geraete">
+<h2 class="rv">Unterstützte Geräte</h2>
+<p class="rv">Tippe auf eine Karte für mehr Details. Welche macOS-Version konkret möglich ist, hängt vom jeweiligen Modell und Baujahr ab.</p>
+<div class="grid" style="margin-top:34px">
+<button class="card dev rv" aria-expanded="false"><span class="plus" aria-hidden="true">+</span><h3>MacBook</h3><small>Das klassische Notebook</small><div class="more"><div><p>Für ältere MacBook-Modelle. Die erreichbare macOS-Version richtet sich nach dem Baujahr.</p></div></div></button>
+<button class="card dev rv" style="--d:.08s" aria-expanded="false"><span class="plus" aria-hidden="true">+</span><h3>MacBook Air</h3><small>Leicht und mobil</small><div class="more"><div><p>Für ältere MacBook-Air-Modelle. Die erreichbare macOS-Version richtet sich nach dem Baujahr.</p></div></div></button>
+<button class="card dev rv" style="--d:.16s" aria-expanded="false"><span class="plus" aria-hidden="true">+</span><h3>MacBook Pro</h3><small>Das Arbeitstier</small><div class="more"><div><p>Für ältere MacBook-Pro-Modelle. Die erreichbare macOS-Version richtet sich nach dem Baujahr.</p></div></div></button>
+<button class="card dev rv" style="--d:.24s" aria-expanded="false"><span class="plus" aria-hidden="true">+</span><h3>Mac mini</h3><small>Kompakt am Schreibtisch</small><div class="more"><div><p>Für ältere Mac-mini-Modelle. Die erreichbare macOS-Version richtet sich nach dem Baujahr.</p></div></div></button>
+</div>
+<div class="no rv"><strong>Keine iMacs</strong><p>iMacs sind ausdrücklich nicht Teil dieses Angebots.</p></div>
+</section>
+
+<section id="ablauf">
+<h2 class="rv">Ablauf &amp; Voraussetzungen</h2>
+<p class="rv">Drei Schritte, in dieser Reihenfolge.</p>
+<div class="steps">
+<div class="step rv"><div><h3>Vorbereitung</h3><ul><li>Datensicherung (Backup) anlegen</li><li>Vom Apple-Account abmelden</li></ul></div></div>
+<div class="step rv" style="--d:.1s"><div><h3>Upgrade-Prozess</h3><ul><li>Das System wird vorbereitet</li><li>Die neuere macOS-Version wird installiert</li><li>Danach folgt ein Funktionscheck</li></ul></div></div>
+<div class="step rv" style="--d:.2s"><div><h3>Sicherheit &amp; Rückkehr</h3><p>Probleme können auftreten. Dein Mac lässt sich aber jederzeit auf die vorherige Version zurücksetzen.</p></div></div>
+</div>
+</section>
+
+<section id="sicherheit" class="safe">
+<h2 class="rv">Sicherheit &amp; weitere Infos</h2>
+<p class="rv">Mit einem Backup und der Möglichkeit zur Rückkehr auf die vorherige Version bleibt dein Mac abgesichert.</p>
+<div class="dm rv">
+<h3 class="grad">Buchen? Schreiben Sie mir auf Instagram.</h3>
+<p>Wenn Sie das buchen wollen, schreiben Sie mir gerne über Instagram. Mein Instagram-Name ist macOS.update.</p><a class="btn" href="https://www.instagram.com/macOS.update" target="_blank" rel="noopener">@macOS.update auf Instagram</a>
+</div>
+</section>
+</main>
+<footer>Instagram: macOS.update</footer>
+
+<script>
+(function(){
+var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var els=document.querySelectorAll('.rv');
+if('IntersectionObserver' in window&&!rm){
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});
+els.forEach(function(el){io.observe(el)});
+}else{els.forEach(function(el){el.classList.add('in')})}
+document.querySelectorAll('.card').forEach(function(c){
+c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
+});
+document.querySelectorAll('.dev').forEach(function(b){
+b.addEventListener('click',function(){b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true')});
+});
+var root=document.documentElement,steps=document.querySelector('.steps');
+if(!rm){
+document.querySelectorAll('.card').forEach(function(c){
+c.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')c.classList.add('tilting')});
+c.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse')return;var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(900px) rotateX('+(-y*7)+'deg) rotateY('+(x*9)+'deg) translateY(-4px)'});
+c.addEventListener('pointerleave',function(){c.classList.remove('tilting');c.style.transform=''});
+});
+var tick=false;
+function upd(){tick=false;root.style.setProperty('--sy',scrollY);if(steps){var r=steps.getBoundingClientRect(),p=(innerHeight*.7-r.top)/r.height;root.style.setProperty('--prog',Math.max(0,Math.min(1,p)))}}
+addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd();
+}else if(steps){root.style.setProperty('--prog',1)}
+var links=document.querySelectorAll('nav a[href^="#"]:not(.brand)');
+var so=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.toggle('act',l.getAttribute('href')==='#'+x.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('main section[id]').forEach(function(s){so.observe(s)});
+var pl=document.getElementById('plates');
+if(pl&&!rm){
+var sx=58,sz=-32;
+addEventListener('pointermove',function(e){
+var x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;
+pl.style.transform='rotateX('+(sx-y*10)+'deg) rotateZ('+(sz+x*14)+'deg)';
+},{passive:true});
+}
+})();
+</script>
+</body>
+</html>
